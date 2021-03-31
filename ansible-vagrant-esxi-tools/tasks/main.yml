@@ -22,6 +22,8 @@
   shell: |
     /tmp/vmare-ovftool.bundle --eulas-agreed
     
+- name: Remove file ovftool installer
+  file: path=/tmp/vmare-ovftool.bundle state= absent
 
 
 # - name: Add and configure management user
