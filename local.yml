@@ -1,0 +1,8 @@
+---
+- name: Ansible Pull file
+  hosts: all
+  user: root
+  become: true
+  connection: local
+  roles:
+    - ansible-vagrant-esxi-tools
