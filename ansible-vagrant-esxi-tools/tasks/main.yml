@@ -10,42 +10,53 @@
   - software-properties-common
   - vagrant
 
-
-- name: Add and configure management user
+- name: Configure vagrant plugins
   shell: |
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-    sudo apt update
-    apt-cache policy docker-ce
+    vagrant plugin install vagrant-vmware-esxi vagrant-ghost
 
-- name: Install packages
-  apt: name={{ item }} state=present
-  with_items:
-  - docker-ce
-
-
-
-- name: install KinD
+- name: copy ovftool installer
+  copy: src=vmare-ovftool.bundle dest=/tmp/vmare-ovftool.bundle
+  
+- name: Install ovftool
   shell: |
-    curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.10.0/kind-linux-amd64
-    chmod +x ./kind
-    mv ./kind /usr/local/bin/kind
+    vmare-ovftool.bundle --eulas-agreed
 
-- name: install Helm and helmfile
-  shell: |
-    wget https://get.helm.sh/helm-v3.5.3-linux-amd64.tar.gz -O helm.tar.gz
-    tar -xvf helm.tar.gz
-    mv linux-amd64/helm /usr/local/bin
-    rm -rf linux-amd64/ helm.tar.gz
-    wget https://github.com/roboll/helmfile/releases/download/v0.138.7/helmfile_linux_amd64  -O helmfile
-    chmod +x helmfile
-    mv helmfile /usr/local/bin
-    helm plugin install https://github.com/databus23/helm-diff.git
 
-- name: install kubectl , kubectx and kubens
-  shell: |
-    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-    git clone https://github.com/ahmetb/kubectx /opt/kubectx
-    ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
-    ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+# - name: Add and configure management user
+#   shell: |
+#     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+#     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+#     sudo apt update
+#     apt-cache policy docker-ce
+
+# - name: Install packages
+#   apt: name={{ item }} state=present
+#   with_items:
+#   - docker-ce
+
+
+
+# - name: install KinD
+#   shell: |
+#     curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.10.0/kind-linux-amd64
+#     chmod +x ./kind
+#     mv ./kind /usr/local/bin/kind
+
+# - name: install Helm and helmfile
+#   shell: |
+#     wget https://get.helm.sh/helm-v3.5.3-linux-amd64.tar.gz -O helm.tar.gz
+#     tar -xvf helm.tar.gz
+#     mv linux-amd64/helm /usr/local/bin
+#     rm -rf linux-amd64/ helm.tar.gz
+#     wget https://github.com/roboll/helmfile/releases/download/v0.138.7/helmfile_linux_amd64  -O helmfile
+#     chmod +x helmfile
+#     mv helmfile /usr/local/bin
+#     helm plugin install https://github.com/databus23/helm-diff.git
+
+# - name: install kubectl , kubectx and kubens
+#   shell: |
+#     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+#     install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+#     git clone https://github.com/ahmetb/kubectx /opt/kubectx
+#     ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+#     ln -s /opt/kubectx/kubens /usr/local/bin/kubens
