@@ -12,14 +12,15 @@
 
 - name: Configure vagrant plugins
   shell: |
-    vagrant plugin install vagrant-vmware-esxi vagrant-ghost
+    vagrant plugin install 
+    vagrant-vmware-esxi vagrant-ghost
 
 - name: copy ovftool installer
   copy: src=vmare-ovftool.bundle dest=/tmp/vmare-ovftool.bundle
   
 - name: Install ovftool
   shell: |
-    vmare-ovftool.bundle --eulas-agreed
+    /tmp/vmare-ovftool.bundle --eulas-agreed
 
 
 # - name: Add and configure management user
