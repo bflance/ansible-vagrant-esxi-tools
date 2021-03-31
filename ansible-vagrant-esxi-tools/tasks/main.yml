@@ -21,8 +21,9 @@
 - name: Install ovftool
   shell: |
     /tmp/vmare-ovftool.bundle --eulas-agreed
+    
 
-
+    
 # - name: Add and configure management user
 #   shell: |
 #     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
