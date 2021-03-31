@@ -12,8 +12,8 @@
 
 - name: Configure vagrant plugins
   shell: |
-    vagrant plugin install 
-    vagrant-vmware-esxi vagrant-ghost
+    vagrant plugin install vagrant-vmware-esxi
+    vagrant plugin install vagrant-ghost
 
 - name: copy ovftool installer
   copy: src=vmare-ovftool.bundle dest=/tmp/vmare-ovftool.bundle
@@ -23,7 +23,7 @@
     /tmp/vmare-ovftool.bundle --eulas-agreed
     
 
-    
+
 # - name: Add and configure management user
 #   shell: |
 #     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
