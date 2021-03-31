@@ -16,7 +16,7 @@
     vagrant plugin install vagrant-ghost
 
 - name: copy ovftool installer
-  copy: src=vmare-ovftool.bundle dest=/tmp/vmare-ovftool.bundle
+  copy: src=vmare-ovftool.bundle dest=/tmp/vmare-ovftool.bundle mode='0777'
   
 - name: Install ovftool
   shell: |
